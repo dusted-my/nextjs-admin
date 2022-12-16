@@ -111,7 +111,7 @@ export default function Login() {
                 label="Remember me"
               />
 
-              <Link href="/index">
+              <Link href="/">
               <Button 
                 fullWidth
                 variant="contained"
