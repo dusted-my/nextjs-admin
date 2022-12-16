@@ -133,7 +133,7 @@ function DashboardContent() {
           <Divider />
           <List component="nav">
           <React.Fragment>
-    
+    <img src="/logo.png" width="220" height="60"/>
     <ListItemButton>
       <ListItemIcon>
         <DashboardIcon />
