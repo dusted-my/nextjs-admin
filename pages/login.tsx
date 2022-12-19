@@ -1,6 +1,5 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -43,8 +42,6 @@ export default function Login() {
       component="main"
       sx={{ height: "70vh", mt: "15vh", justifyContent: "center" }}
     >
-      <CssBaseline />
-
       <Grid
         item
         xs={12}
@@ -75,6 +72,7 @@ export default function Login() {
             backgroundColor: "white",
           }}
         >
+          {/* NOTE: Use Image from 'next/link' to create images, don't forget to add "alt" */}
           <Image src="/logo.png" width="200" height="64" alt="Dusted Logo" />
           <Box
             component="form"
@@ -130,6 +128,7 @@ export default function Login() {
               label="Remember me"
             />
 
+            {/* NOTE: Use Link from 'next/link' instead of '@mui/material-ui' */}
             <Link href="/">
               <Button
                 fullWidth
