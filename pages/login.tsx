@@ -72,7 +72,7 @@ export default function Login() {
             backgroundColor: "white",
           }}
         >
-          {/* NOTE: Use Image from 'next/link' to create images, don't forget to add "alt" */}
+          {/* NOTE: Use Image from 'next/image' to create images, don't forget to add "alt" */}
           <Image src="/logo.png" width="200" height="64" alt="Dusted Logo" />
           <Box
             component="form"
