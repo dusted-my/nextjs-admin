@@ -1,16 +1,15 @@
 import {
-  AccountCircle,
   Assignment,
   BarChart,
   ChevronLeft,
   Dashboard,
+  Logout,
   Menu,
   People,
 } from "@mui/icons-material";
 import {
   AppBar,
   AppBarProps,
-  Badge,
   Box,
   Divider,
   Drawer,
@@ -67,11 +66,12 @@ export function DashboardLayout(props: Props) {
           >
             Admin Dashboard
           </Typography>
+          <Link href="/login">
           <IconButton color="inherit">
-            <Badge color="secondary">
-              <AccountCircle />
-            </Badge>
+              <Logout />
           </IconButton>
+          Logout
+          </Link>
         </Toolbar>
       </CustomAppBar>
       <CustomDrawer variant="permanent" open={open}>
@@ -125,7 +125,7 @@ export function DashboardLayout(props: Props) {
 const links = [
   {
     label: "Dashboard",
-    href: "dashboard",
+    href: " ",
     icon: <Dashboard />,
   },
   {

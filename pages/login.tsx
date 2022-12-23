@@ -37,30 +37,17 @@ export default function Login() {
   };
 
   return (
+    
     <Grid
       container
       component="main"
       sx={{ height: "70vh", mt: "15vh", justifyContent: "center" }}
     >
-      <Grid
-        item
-        xs={12}
-        sm={8}
-        md={5}
-        component={Paper}
-        elevation={6}
-        square
-        sx={{
-          backgroundImage: "url(/clean.png)",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundPosition: "center",
-        }}
-      />
+   	
+	<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+  <Image src="/clean.png" width="580" height="580" alt="Dusted Logo" />
+</Grid>
+
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
@@ -70,6 +57,7 @@ export default function Login() {
             flexDirection: "column",
             alignItems: "center",
             backgroundColor: "white",
+            backgroundPosition: "center",
           }}
         >
           {/* NOTE: Use Image from 'next/image' to create images, don't forget to add "alt" */}
