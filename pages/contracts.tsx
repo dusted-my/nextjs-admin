@@ -2,6 +2,9 @@ import { DashboardLayout } from "../layouts";
 import * as React from 'react';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { Box } from "@mui/material";
+import { useSession } from "next-auth/react";
+import Router from "next/router";
+import { useEffect } from "react";
 
 const rows: GridRowsProp = [
   { id: 1, col1: 'No 15, Jalan Muhibbah, 93400 Kuching, Sarawak', col2: 'Please knock before entering the house.', col3: 'not_applicable', col4: 'RM300', col5: 'Sweeping floor, Mopping floor', col6: '/users/..', col7: '/users/..', col8: 'Active', col9: '16 March 2022 2022 at 08:00:00 UTC+8', col10: '16 March 2022 2022 at 10:00:00 UTC+8', col11: '20 March 2022 2022 at 10:35:55 UTC+8', col12: '20 March 2022 2022 at 10:35:55 UTC+8' },
@@ -29,8 +32,19 @@ const columns: GridColDef[] = [
 ];
 
 export default function Contracts() {
+  const { status, data } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") Router.replace("/login");
+  }, [status]);
+
+  if (status === "authenticated") 
     return (
       <DashboardLayout>
+        <div>
+        This page is Protected for special people. like{"\n"}
+        {JSON.stringify(data.user, null, 2)}
+      </div>
+
          <Box
             sx={{
               width: '100%',
@@ -43,4 +57,5 @@ export default function Contracts() {
         </Box>
       </DashboardLayout>
     );
+    return <div>You should probably to login to view this page.</div>;
   }

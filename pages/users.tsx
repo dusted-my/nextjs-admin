@@ -2,6 +2,9 @@ import { DashboardLayout } from "../layouts";
 import * as React from 'react';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { Box } from "@mui/material";
+import { useSession } from "next-auth/react";
+import Router from "next/router";
+import { useEffect } from "react";
 
 const rows: GridRowsProp = [
   { id: 1, col1: 'Allyson Lim Kai Sheng', col2: 'allyson@gmail.com', col3: 'No 11, Jalan Abell, 93100 Kuching, Sarawak', col4: '0193467456', col5: 'https://cdn-icons-png.flaticon.com/512/3135/3135768.png', col6: 'true', col7: 'Deep cleaning, Washing dishes, Laundry', col8: '5', col9: 'Active', col10:'3 January 2022 at 08:43:09 UTC+8', col11:'4 January 2022 at 09:51:00 UTC+8' },
@@ -36,8 +39,19 @@ const columns: GridColDef[] = [
 ];
 
 export default function Users() {
+  const { status, data } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") Router.replace("/login");
+  }, [status]);
+
+  if (status === "authenticated") 
     return (
       <DashboardLayout>
+        <div>
+        This page is Protected for special people. like{"\n"}
+        {JSON.stringify(data.user, null, 2)}
+      </div>
+      
          <Box
       sx={{
         width: '100%',
@@ -48,7 +62,9 @@ export default function Users() {
         >
           <DataGrid rows={rows} columns={columns} autoHeight={true}/>
         </Box>
-            
+        
       </DashboardLayout>
+      
     );
+    return <div>You should probably to login to view this page.</div>;
   }

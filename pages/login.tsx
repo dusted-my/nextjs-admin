@@ -16,16 +16,23 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { FormEventHandler } from "react";
 
 export default function Login() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+    const [userInfo, setUserInfo] = React.useState({ email: "", password: "" });
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+      // validate your userinfo
+      event.preventDefault();
+  
+      const res = await signIn("credentials", {
+        email: userInfo.email,
+        password: userInfo.password,
+        redirect: false,
+      });
+  
+      console.log(res);
+    };
 
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -71,13 +78,16 @@ export default function Login() {
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Email sx={{ color: "action.active", mr: 1, my: 0.5 }} />
               <TextField
+              value={userInfo.email}
+              onChange={({ target }) =>
+                setUserInfo({ ...userInfo, email: target.value })
+              }
                 margin="normal"
                 required
                 fullWidth
-                id="email"
                 label="Email Address"
-                name="email"
-                autoComplete="email"
+                type="email"
+                placeholder="xxxxx@dusted.my"
               />
             </Box>
 
@@ -107,7 +117,12 @@ export default function Login() {
                       </IconButton>
                     </InputAdornment>
                   }
+                  value={userInfo.password}
+                  onChange={({ target }) =>
+                    setUserInfo({ ...userInfo, password: target.value })
+                  }
                   label="Password"
+                  placeholder="****************"
                 />
               </FormControl>
             </Box>
@@ -121,12 +136,12 @@ export default function Login() {
               <Button
                 fullWidth
                 variant="contained"
+                type="submit"
                 sx={{ mt: 3, mb: 2, backgroundColor: "black" }}
               >
                 Log In
               </Button>
-            </Link>
-
+              </Link>
             <Grid container>
               <Grid item xs>
                 <Link href="#">Forgot password?</Link>

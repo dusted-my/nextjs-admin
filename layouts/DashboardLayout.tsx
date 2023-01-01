@@ -2,7 +2,6 @@ import {
   Assignment,
   BarChart,
   ChevronLeft,
-  Dashboard,
   Logout,
   Menu,
   People,
@@ -25,6 +24,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactNode } from "react";
+import { signOut } from "next-auth/react";
+
 
 interface Props {
   children: ReactNode;
@@ -66,12 +67,10 @@ export function DashboardLayout(props: Props) {
           >
             Admin Dashboard
           </Typography>
-          <Link href="/login">
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={() => signOut({ callbackUrl: 'http://localhost:3000/login' })}>
               <Logout />
+              Logout
           </IconButton>
-          Logout
-          </Link>
         </Toolbar>
       </CustomAppBar>
       <CustomDrawer variant="permanent" open={open}>
@@ -123,11 +122,6 @@ export function DashboardLayout(props: Props) {
 }
 
 const links = [
-  {
-    label: "Dashboard",
-    href: " ",
-    icon: <Dashboard />,
-  },
   {
     label: "Users",
     href: "users",

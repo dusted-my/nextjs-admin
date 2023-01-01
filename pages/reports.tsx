@@ -2,6 +2,9 @@ import { DashboardLayout } from "../layouts";
 import * as React from 'react';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { Box } from "@mui/material";
+import { useSession } from "next-auth/react";
+import Router from "next/router";
+import { useEffect } from "react";
 
 const rows: GridRowsProp = [
   { id: 1, col1: 'The app is slowwww..', col2: 'https://www.elegantthemes.com/blog/wp-content/uploads/2019/10/loading-screen-featured-image.jpg', col3: 'The moment I open the app after closing at the background, it takes more than 5 seconds to load!!!', col4: '/users/..', col5: 'Active', col6: '15 March 2022 at 10:35:55 UTC+8', col7: '15 March 2022 at 10:35:55 UTC+8' },
@@ -19,8 +22,19 @@ const columns: GridColDef[] = [
 ];
 
 export default function Reports() {
+  const { status, data } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") Router.replace("/login");
+  }, [status]);
+
+  if (status === "authenticated") 
     return (
       <DashboardLayout>
+        <div>
+        This page is Protected for special people. like{"\n"}
+        {JSON.stringify(data.user, null, 2)}
+      </div>
+
          <Box
             sx={{
               width: '100%',
@@ -33,4 +47,5 @@ export default function Reports() {
         </Box>
       </DashboardLayout>
     );
+    return <div>You should probably to login to view this page.</div>;
   }
