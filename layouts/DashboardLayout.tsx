@@ -25,7 +25,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { ReactNode } from "react";
 import { signOut } from "next-auth/react";
-
+import ProtectedLayout from "./ProtectedLayout";
 
 interface Props {
   children: ReactNode;
@@ -39,85 +39,92 @@ export function DashboardLayout(props: Props) {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CustomAppBar position="absolute" open={open}>
-        <Toolbar
-          sx={{
-            px: "24px",
-          }}
-        >
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleDrawer}
+    <ProtectedLayout>
+      <Box sx={{ display: "flex" }}>
+        <CustomAppBar position="absolute" open={open}>
+          <Toolbar
             sx={{
-              marginRight: "36px",
-              ...(open && { display: "none" }),
+              px: "24px",
             }}
           >
-            <Menu />
-          </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}
-          >
-            Admin Dashboard
-          </Typography>
-          <IconButton color="inherit" onClick={() => signOut({ callbackUrl: 'http://localhost:3000/login' })}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={toggleDrawer}
+              sx={{
+                marginRight: "36px",
+                ...(open && { display: "none" }),
+              }}
+            >
+              <Menu />
+            </IconButton>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              Admin Dashboard
+            </Typography>
+            <IconButton
+              color="inherit"
+              onClick={() =>
+                signOut({ callbackUrl: "http://localhost:3000/login" })
+              }
+            >
               <Logout />
               Logout
-          </IconButton>
-        </Toolbar>
-      </CustomAppBar>
-      <CustomDrawer variant="permanent" open={open}>
-        <Toolbar
+            </IconButton>
+          </Toolbar>
+        </CustomAppBar>
+        <CustomDrawer variant="permanent" open={open}>
+          <Toolbar
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              px: [1],
+            }}
+          >
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeft />
+            </IconButton>
+          </Toolbar>
+          <Divider />
+          <Box sx={{ margin: "1rem auto" }}>
+            <Image src="/logo.png" width="100" height="32" alt="Dusted Logo" />
+          </Box>
+          <List component="nav">
+            {links.map((link) => (
+              <Link href={`/${link.href}`} key={link.href}>
+                <ListItemButton>
+                  <ListItemIcon>{link.icon}</ListItemIcon>
+                  <ListItemText primary={link.label} />
+                </ListItemButton>
+              </Link>
+            ))}
+          </List>
+        </CustomDrawer>
+        <Box
+          component="main"
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            px: [1],
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+            padding: "2rem",
           }}
         >
-          <IconButton onClick={toggleDrawer}>
-            <ChevronLeft />
-          </IconButton>
-        </Toolbar>
-        <Divider />
-        <Box sx={{ margin: "1rem auto" }}>
-          <Image src="/logo.png" width="100" height="32" alt="Dusted Logo" />
+          <Toolbar />
+          {children}
         </Box>
-        <List component="nav">
-          {links.map((link) => (
-            <Link href={`/${link.href}`} key={link.href}>
-              <ListItemButton>
-                <ListItemIcon>{link.icon}</ListItemIcon>
-                <ListItemText primary={link.label} />
-              </ListItemButton>
-            </Link>
-          ))}
-        </List>
-      </CustomDrawer>
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: "100vh",
-          overflow: "auto",
-          padding: "2rem",
-        }}
-      >
-        <Toolbar />
-        {children}
       </Box>
-    </Box>
+    </ProtectedLayout>
   );
 }
 

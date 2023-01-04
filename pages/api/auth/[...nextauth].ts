@@ -23,7 +23,7 @@ const authOptions: NextAuthOptions = {
         // if everything is fine
         return {
           id: "123",
-          name: "Ben",
+          name: "Admin",
           email: "admin@dusted.my",
         };
       },
@@ -31,9 +31,7 @@ const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/login",
-   
   },
-  
 };
 
 export default NextAuth(authOptions);

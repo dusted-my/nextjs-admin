@@ -18,21 +18,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { FormEventHandler } from "react";
+import Router from "next/router";
 
 export default function Login() {
-    const [userInfo, setUserInfo] = React.useState({ email: "", password: "" });
-    const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-      // validate your userinfo
-      event.preventDefault();
-  
-      const res = await signIn("credentials", {
-        email: userInfo.email,
-        password: userInfo.password,
-        redirect: false,
-      });
-  
-      console.log(res);
-    };
+  const [userInfo, setUserInfo] = React.useState({ email: "", password: "" });
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    // validate your userinfo
+    event.preventDefault();
+
+    const res = await signIn("credentials", {
+      email: userInfo.email,
+      password: userInfo.password,
+      redirect: false,
+    });
+
+    if (res?.status !== 200) return;
+    Router.push("/");
+  };
 
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -44,16 +47,14 @@ export default function Login() {
   };
 
   return (
-    
     <Grid
       container
       component="main"
       sx={{ height: "70vh", mt: "15vh", justifyContent: "center" }}
     >
-   	
-	<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-  <Image src="/clean.png" width="580" height="580" alt="Dusted Logo" />
-</Grid>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Image src="/clean.png" width="580" height="580" alt="Dusted Logo" />
+      </Grid>
 
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
@@ -78,10 +79,10 @@ export default function Login() {
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Email sx={{ color: "action.active", mr: 1, my: 0.5 }} />
               <TextField
-              value={userInfo.email}
-              onChange={({ target }) =>
-                setUserInfo({ ...userInfo, email: target.value })
-              }
+                value={userInfo.email}
+                onChange={({ target }) =>
+                  setUserInfo({ ...userInfo, email: target.value })
+                }
                 margin="normal"
                 required
                 fullWidth
@@ -132,16 +133,14 @@ export default function Login() {
             />
 
             {/* NOTE: Use Link from 'next/link' instead of '@mui/material-ui' */}
-            <Link href="/">
-              <Button
-                fullWidth
-                variant="contained"
-                type="submit"
-                sx={{ mt: 3, mb: 2, backgroundColor: "black" }}
-              >
-                Log In
-              </Button>
-              </Link>
+            <Button
+              fullWidth
+              variant="contained"
+              type="submit"
+              sx={{ mt: 3, mb: 2, backgroundColor: "black" }}
+            >
+              Log In
+            </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#">Forgot password?</Link>
