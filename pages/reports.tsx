@@ -1,88 +1,22 @@
 import { DashboardLayout } from "../layouts";
 import * as React from "react";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
-import Image from "mui-image";
-
-const rows: GridRowsProp = [
-  {
-    id: 1,
-    col1: "The app is slowwww..",
-    col2: "https://www.elegantthemes.com/blog/wp-content/uploads/2019/10/loading-screen-featured-image.jpg",
-    col3: "The moment I open the app after closing at the background, it takes more than 5 seconds to load!!!",
-    col4: "/users/..",
-    col5: "Active",
-    col6: "15 March 2022 at 10:35:55 UTC+8",
-    col7: "15 March 2022 at 10:35:55 UTC+8",
-  },
-  {
-    id: 2,
-    col1: "Cleaner occasionally cancel.",
-    col2: "https://thumb.ac-illust.com/1b/1b1466b60af617ceaf53924063ae6aaf_t.jpeg",
-    col3: "The cleaner suddenly cancel the service without any reason, so I need to find another cleaner again!!",
-    col4: "/users/..",
-    col5: "Active",
-    col6: "4 December 2022 at 12:04:25 UTC+8",
-    col7: "4 December 2022 at 12:04:25 UTC+8",
-  },
-];
-
-const columns: GridColDef[] = [
-  {
-    field: "col1",
-    headerName: "title",
-    headerAlign: "center",
-    headerClassName: "super-app-theme--header",
-    width: 250,
-  },
-  {
-    field: "col2",
-    headerName: "images",
-    headerAlign: "center",
-    headerClassName: "super-app-theme--header",
-    width: 150,
-    renderCell: (params) => (
-      <Image src={params.value} width={50} height={50} alt="img" />
-    ),
-  },
-  {
-    field: "col3",
-    headerName: "message",
-    headerAlign: "center",
-    headerClassName: "super-app-theme--header",
-    width: 750,
-  },
-  {
-    field: "col4",
-    headerName: "userDoc",
-    headerAlign: "center",
-    headerClassName: "super-app-theme--header",
-    width: 150,
-  },
-  {
-    field: "col5",
-    headerName: "status",
-    headerAlign: "center",
-    headerClassName: "super-app-theme--header",
-    width: 100,
-  },
-  {
-    field: "col6",
-    headerName: "createdAt",
-    headerAlign: "center",
-    headerClassName: "super-app-theme--header",
-    width: 280,
-  },
-  {
-    field: "col7",
-    headerName: "updatedAt",
-    headerAlign: "center",
-    headerClassName: "super-app-theme--header",
-    width: 280,
-  },
-];
+import {
+  DataGrid,
+  GridRowsProp,
+  GridColDef,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
+import { Box, Chip, CircularProgress, Typography } from "@mui/material";
+import { useQuery } from "react-query";
+import { getReports } from "../queries/reports";
+import { IReport } from "../interface";
 
 export default function Reports() {
+  const { data, isLoading } = useQuery({
+    queryKey: "report",
+    queryFn: getReports,
+  });
+
   return (
     <DashboardLayout>
       <Box
@@ -93,8 +27,83 @@ export default function Reports() {
           },
         }}
       >
-        <DataGrid rows={rows} columns={columns} autoHeight={true} />
+        {isLoading ? (
+          <CircularProgress />
+        ) : data ? (
+          <DataGrid
+            rows={data}
+            columns={columns}
+            autoHeight={true}
+            getRowId={(row: IReport) => row.reportId}
+          />
+        ) : (
+          <Typography>No reports</Typography>
+        )}
       </Box>
     </DashboardLayout>
   );
 }
+
+const columns: GridColDef[] = [
+  {
+    field: "message",
+    headerName: "Message",
+    headerAlign: "center",
+    headerClassName: "super-app-theme--header",
+    width: 750,
+  },
+  {
+    field: "issues",
+    headerName: "Issues",
+    headerAlign: "center",
+    headerClassName: "super-app-theme--header",
+    width: 250,
+    renderCell: (params: GridRenderCellParams<IReport["issues"], IReport>) =>
+      params.value?.map((issue) => (
+        <Chip
+          label={issue}
+          key={`${params.row.cleanerDoc}-${issue}`}
+          sx={{ textTransform: "capitalize" }}
+        />
+      )),
+  },
+  {
+    field: "cleanerDoc",
+    headerName: "Cleaner Doc",
+    headerAlign: "center",
+    headerClassName: "super-app-theme--header",
+    width: 300,
+  },
+  {
+    field: "userDoc",
+    headerName: "User Doc",
+    headerAlign: "center",
+    headerClassName: "super-app-theme--header",
+    width: 300,
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    headerAlign: "center",
+    headerClassName: "super-app-theme--header",
+    width: 100,
+  },
+  {
+    field: "createdAt",
+    headerName: "Created At",
+    headerAlign: "center",
+    headerClassName: "super-app-theme--header",
+    width: 280,
+    renderCell: (params: GridRenderCellParams<IReport["createdAt"]>) =>
+      params.value?.toDate().toISOString(),
+  },
+  {
+    field: "updatedAt",
+    headerName: "Updated At",
+    headerAlign: "center",
+    headerClassName: "super-app-theme--header",
+    width: 280,
+    renderCell: (params: GridRenderCellParams<IReport["updatedAt"]>) =>
+      params.value?.toDate().toISOString(),
+  },
+];
