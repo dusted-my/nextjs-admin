@@ -88,7 +88,7 @@ const columns: GridColDef[] = [
   },
   {
     field: "services",
-    headerName: "services",
+    headerName: "Services",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 450,
@@ -99,7 +99,7 @@ const columns: GridColDef[] = [
   },
   {
     field: "stars",
-    headerName: "stars",
+    headerName: "Stars",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 150,
@@ -109,14 +109,14 @@ const columns: GridColDef[] = [
   },
   {
     field: "status",
-    headerName: "status",
+    headerName: "Status",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 200,
   },
   {
     field: "createdAt",
-    headerName: "createdAt",
+    headerName: "Created At",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 280,
@@ -125,7 +125,7 @@ const columns: GridColDef[] = [
   },
   {
     field: "updatedAt",
-    headerName: "updatedAt",
+    headerName: "Updated At",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 280,
