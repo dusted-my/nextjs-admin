@@ -6,6 +6,7 @@ import Image from "mui-image";
 import { useQuery } from "react-query";
 import { IUser } from "../interface";
 import { getUsers } from "../queries";
+import UserStatus from "../components/UserStatus";
 
 export default function Users() {
   const { data, isLoading } = useQuery({
@@ -42,6 +43,17 @@ export default function Users() {
 
 const columns: GridColDef[] = [
   {
+    field: "imageUrl",
+    align: "center",
+    headerName: "Profile Picture",
+    headerAlign: "center",
+    headerClassName: "super-app-theme--header",
+    width: 150,
+    renderCell: (params) => (
+      <Image src={params.value} width={50} height={50} alt="Profile pic" />
+    ),
+  },
+  {
     field: "fullName",
     headerName: "Full Name",
     headerAlign: "center",
@@ -57,10 +69,17 @@ const columns: GridColDef[] = [
   },
   {
     field: "isCleaner",
-    headerName: "Is Cleaner",
+    align: "center",
+    headerName: "User Type",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
-    width: 100,
+    width: 150,
+    renderCell: (params: GridRenderCellParams<IUser["isCleaner"]>) =>
+      params.value === true ? (
+        <Chip variant="outlined" label="Cleaner" color="success" />
+      ) : (
+        <Chip variant="outlined" label="Customer" color="info" />
+      ),
   },
   {
     field: "address",
@@ -71,19 +90,32 @@ const columns: GridColDef[] = [
   },
   {
     field: "nric",
+    align: "center",
     headerName: "NRIC",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 120,
   },
   {
-    field: "imageUrl",
-    headerName: "Profile Picture",
+    field: "nricFrontImageUrl",
+    align: "center",
+    headerName: "NRIC Front",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 150,
     renderCell: (params) => (
-      <Image src={params.value} width={50} height={50} alt="Profile pic" />
+      <Image src={params.value} width={50} height={50} alt="NRIC Front" />
+    ),
+  },
+  {
+    field: "nricBackImageUrl",
+    align: "center",
+    headerName: "NRIC Back",
+    headerAlign: "center",
+    headerClassName: "super-app-theme--header",
+    width: 150,
+    renderCell: (params) => (
+      <Image src={params.value} width={50} height={50} alt="NRIC Back" />
     ),
   },
   {
@@ -99,6 +131,7 @@ const columns: GridColDef[] = [
   },
   {
     field: "stars",
+    align: "center",
     headerName: "Stars",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
@@ -109,10 +142,14 @@ const columns: GridColDef[] = [
   },
   {
     field: "status",
+    align: "center",
     headerName: "Status",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 200,
+    renderCell: (params: GridRenderCellParams<IUser["status"], IUser>) => (
+      <UserStatus user={params.row} />
+    ),
   },
   {
     field: "createdAt",

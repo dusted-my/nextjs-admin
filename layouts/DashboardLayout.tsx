@@ -2,6 +2,7 @@ import {
   Assignment,
   BarChart,
   ChevronLeft,
+  Dashboard,
   Logout,
   Menu,
   People,
@@ -10,6 +11,7 @@ import {
   AppBar,
   AppBarProps,
   Box,
+  Button,
   Divider,
   Drawer,
   IconButton,
@@ -68,15 +70,15 @@ export function DashboardLayout(props: Props) {
             >
               Admin Dashboard
             </Typography>
-            <IconButton
+            <Button
               color="inherit"
+              startIcon={<Logout />}
               onClick={() =>
                 signOut({ callbackUrl: "http://localhost:3000/login" })
               }
             >
-              <Logout />
               Logout
-            </IconButton>
+            </Button>
           </Toolbar>
         </CustomAppBar>
         <CustomDrawer variant="permanent" open={open}>
@@ -129,6 +131,11 @@ export function DashboardLayout(props: Props) {
 }
 
 const links = [
+  {
+    label: "Dashboard",
+    href: "",
+    icon: <Dashboard />,
+  },
   {
     label: "Users",
     href: "users",
