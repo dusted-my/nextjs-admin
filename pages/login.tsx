@@ -16,11 +16,19 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { FormEventHandler } from "react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 export default function Login() {
+  const { status } = useSession();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (status === "authenticated") router.replace("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
+
   const [userInfo, setUserInfo] = React.useState({ email: "", password: "" });
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
