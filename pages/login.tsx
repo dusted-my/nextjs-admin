@@ -135,10 +135,6 @@ export default function Login() {
                 />
               </FormControl>
             </Box>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
 
             {/* NOTE: Use Link from 'next/link' instead of '@mui/material-ui' */}
             <Button
@@ -149,11 +145,6 @@ export default function Login() {
             >
               Log In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#">Forgot password?</Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Grid>
