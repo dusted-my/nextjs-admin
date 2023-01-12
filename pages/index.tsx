@@ -4,6 +4,7 @@ import {
   CardHeader,
   CircularProgress,
   Grid,
+  Typography,
   useTheme,
 } from "@mui/material";
 import {
@@ -26,6 +27,7 @@ import { useQuery } from "react-query";
 import { DashboardLayout } from "../layouts";
 import { getUsers } from "../queries";
 import { getContracts } from "../queries/contracts";
+import { getReports } from "../queries/reports";
 
 Chart.register(
   ArcElement,
@@ -115,9 +117,80 @@ export default function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contracts]);
 
+  const { data: reports, isLoading: isLoadingReports } = useQuery({
+    queryKey: "report",
+    queryFn: getReports,
+    refetchOnWindowFocus: false,
+  });
+
   return (
     <DashboardLayout title="Dashboard">
       <Grid container spacing={5}>
+        <Grid item xs={12}>
+          <Grid container spacing={5}>
+            <Grid item xs={6} md={4}>
+              <Card>
+                <CardHeader title="Pending Cleaner Approvals" />
+                <CardContent>
+                  {isLoadingUsers ? (
+                    <CircularProgress />
+                  ) : (
+                    <Typography
+                      variant="h3"
+                      fontWeight="bold"
+                      textAlign="center"
+                      color="warning.main"
+                    >
+                      {
+                        users?.filter(
+                          (user) => user.status === "pending_cleaner"
+                        ).length
+                      }
+                    </Typography>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <Card>
+                <CardHeader title="No. of Reports" />
+                <CardContent>
+                  {isLoadingReports ? (
+                    <CircularProgress />
+                  ) : (
+                    <Typography
+                      variant="h3"
+                      fontWeight="bold"
+                      textAlign="center"
+                      color="error.main"
+                    >
+                      {reports?.length}
+                    </Typography>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <Card>
+                <CardHeader title="Total Users So Far" />
+                <CardContent>
+                  {isLoadingReports ? (
+                    <CircularProgress />
+                  ) : (
+                    <Typography
+                      variant="h3"
+                      fontWeight="bold"
+                      textAlign="center"
+                      color="success.main"
+                    >
+                      {users?.length}
+                    </Typography>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Grid>
         <Grid item xs={12} md={6}>
           <Card>
             <CardHeader title="Pie Chart of Users" />
