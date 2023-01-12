@@ -60,8 +60,8 @@ export default function Dashboard() {
             users?.filter((user) => !user.isCleaner).length,
           ],
           backgroundColor: [
-            theme.palette.info.light,
             theme.palette.success.light,
+            theme.palette.info.light,
           ],
         },
       ],
