@@ -18,7 +18,7 @@ export default function Contracts() {
   });
 
   return (
-    <DashboardLayout>
+    <DashboardLayout title="Contracts">
       <Box
         sx={{
           width: "100%",

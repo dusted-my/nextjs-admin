@@ -15,7 +15,7 @@ export default function Users() {
   });
 
   return (
-    <DashboardLayout>
+    <DashboardLayout title="Users">
       <Box
         sx={{
           width: "100%",

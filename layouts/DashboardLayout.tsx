@@ -30,10 +30,11 @@ import { signOut } from "next-auth/react";
 import ProtectedLayout from "./ProtectedLayout";
 
 interface Props {
+  title: string;
   children: ReactNode;
 }
 export function DashboardLayout(props: Props) {
-  const { children } = props;
+  const { title, children } = props;
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -123,6 +124,9 @@ export function DashboardLayout(props: Props) {
           }}
         >
           <Toolbar />
+          <Typography variant="h1" fontSize={24} fontWeight="bold" my="1rem">
+            {title}
+          </Typography>
           {children}
         </Box>
       </Box>

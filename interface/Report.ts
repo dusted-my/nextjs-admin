@@ -5,7 +5,7 @@ export interface IReport {
   cleanerDoc: string;
   createdAt: Timestamp;
   issues: string[];
-  message: "The moment I open the app after closing at the background, it takes more than 5 seconds to load!!!";
+  message: string;
   status: "active";
   updatedAt: Timestamp;
   userDoc: string;

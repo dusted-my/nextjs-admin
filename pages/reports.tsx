@@ -18,7 +18,7 @@ export default function Reports() {
   });
 
   return (
-    <DashboardLayout>
+    <DashboardLayout title="Reports">
       <Box
         sx={{
           width: "100%",
