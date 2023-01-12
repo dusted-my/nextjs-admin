@@ -22,6 +22,7 @@ import {
   styled,
   Toolbar,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,8 +36,9 @@ interface Props {
 }
 export function DashboardLayout(props: Props) {
   const { title, children } = props;
+  const isLg = useMediaQuery("(min-width:720px)");
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(isLg);
   const toggleDrawer = () => {
     setOpen(!open);
   };
