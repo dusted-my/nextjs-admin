@@ -126,7 +126,13 @@ export function DashboardLayout(props: Props) {
           }}
         >
           <Toolbar />
-          <Typography variant="h1" fontSize={24} fontWeight="bold" my="1rem">
+          <Typography
+            variant="h1"
+            fontSize={24}
+            fontWeight="bold"
+            my="1rem"
+            color="black"
+          >
             {title}
           </Typography>
           {children}

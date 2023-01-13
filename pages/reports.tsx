@@ -51,6 +51,8 @@ const columns: GridColDef[] = [
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 750,
+    renderCell: (params: GridRenderCellParams<IReport["message"]>) =>
+      params.value || "-",
   },
   {
     field: "issues",
@@ -75,8 +77,8 @@ const columns: GridColDef[] = [
     width: 300,
   },
   {
-    field: "userDoc",
-    headerName: "User Doc",
+    field: "clientDoc",
+    headerName: "Client Doc",
     headerAlign: "center",
     headerClassName: "super-app-theme--header",
     width: 300,
